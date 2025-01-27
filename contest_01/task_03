@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, m, a;
+    cin >> n >> m >> a; // размеры площади и плитки
+
+    // кол-во плиток по горизонтали и вертикали
+    int horizontal = (n + a - 1) / a;
+    int vertical = (m + a - 1) / a;
+
+    // Общее количество плиток
+    int totalTiles = horizontal * vertical;
+
+    cout << totalTiles << endl;
+    return 0;
+}

@@ -1,0 +1,17 @@
+#include <bits/stdc++.h>
+#include <iostream>
+using namespace std;
+
+int main() {
+    int M, N;
+    // Считать размеры площади
+    cin >> M >> N;
+
+    // Считать макс. кол-во плиток
+    int maxTiles = (M * N) / 2;
+
+    // Вывод
+    cout << maxTiles << endl;
+    return 0;
+}
+

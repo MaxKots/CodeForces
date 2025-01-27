@@ -1,0 +1,27 @@
+#include <iostream>
+#include <string>
+#include <unordered_set>
+
+using namespace std;
+
+int main() {
+    string input;
+    cin >> input; // Считать входную строку
+
+    // Множество гласных букв (включая заглавные и строчные)
+    unordered_set<char> vowels = {'a', 'o', 'y', 'e', 'u', 'i', 'A', 'O', 'Y', 'E', 'U', 'I'};
+
+    string result; // Строка результата
+
+    for (char ch : input) {
+        // Если символ не является гласной
+        if (vowels.find(ch) == vowels.end()) {
+            result += '.'; // Добавиь точку перед согласной
+            result += tolower(ch); // Согласная в нижний регистр
+        }
+    }
+
+    cout << result << endl; // Вывод
+
+    return 0;
+}

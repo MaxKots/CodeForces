@@ -1,0 +1,40 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+    const int SIZE = 5; // Размер матрицы
+    int matrix[SIZE][SIZE];
+
+    // Считываем матрицу
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+
+    // Находим позицию единицы
+    int row = -1, col = -1;
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            if (matrix[i][j] == 1) {
+                row = i;
+                col = j;
+                break;
+            }
+        }
+        if (row != -1) break;
+    }
+
+    // Вычисляем минимальное количество шагов
+    int targetRow = 2; // Центр матрицы (индексация с 0)
+    int targetCol = 2; // Центр матрицы (индексация с 0)
+
+    int moves = abs(row - targetRow) + abs(col - targetCol);
+
+    // Выводим результат
+    cout << moves << endl;
+
+    return 0;
+}

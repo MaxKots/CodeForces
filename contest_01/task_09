@@ -1,0 +1,25 @@
+#include <iostream>
+#include <string>
+#include <algorithm> // для std::transform
+
+using namespace std;
+
+int main() {
+    string str1, str2;
+    cin >> str1 >> str2; // Считать строки
+
+    // Обе строки в нижний регистр
+    transform(str1.begin(), str1.end(), str1.begin(), ::tolower);
+    transform(str2.begin(), str2.end(), str2.begin(), ::tolower);
+
+    // Сравнить строки
+    if (str1 < str2) {
+        cout << "-1" << endl;
+    } else if (str1 > str2) {
+        cout << "1" << endl;
+    } else {
+        cout << "0" << endl;
+    }
+
+    return 0;
+}

@@ -1,0 +1,16 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int main() {
+    int p;
+    cin >> p;
+
+    // Проверка, что сумма чётная и не меньше 4, т.к. мин. сумма двух ненулевых чётных чисел — 2 + 2 = 4
+    if (p % 2 == 0 && p >= 4) {
+        cout << "YES";
+    } else {
+        cout << "NO";
+    }
+}
+
