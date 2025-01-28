@@ -1,0 +1,31 @@
+#include <iostream>
+#include <string>
+#include <algorithm> // для std::transform
+using namespace std;
+
+int main() {
+    string s;
+    cin >> s;
+
+    int upperCount = 0, lowerCount = 0;
+
+    // Подсчет кол-ва заглавных и строчных букв
+    for (char c : s) {
+        if (isupper(c)) {
+            upperCount++;
+        } else {
+            lowerCount++;
+        }
+    }
+
+    // Слово в нужный регистр
+    if (upperCount > lowerCount) {
+        transform(s.begin(), s.end(), s.begin(), ::toupper); // К верхнему регистру
+    } else {
+        transform(s.begin(), s.end(), s.begin(), ::tolower); // К нижнему регистру
+    }
+
+    cout << s << endl;
+
+    return 0;
+}
