@@ -1,0 +1,26 @@
+#include <iostream>
+#include <string>
+
+int main() {
+    std::string players;
+    std::cin >> players;
+
+    int maxCount = 1; // максимальное кол-во одинаковых симв. подряд
+    int currentCount = 1; // текущее кол-во одинаковых симв. подряд
+
+    for (size_t i = 1; i < players.length(); ++i) {
+        if (players[i] == players[i - 1]) {
+            currentCount++; // счётчик +, если символы одинаковые
+        } else {
+            currentCount = 1; // сбросить счётчик, если символы разные
+        }
+
+        if (currentCount >= 7) {
+            std::cout << "YES" << std::endl;
+            return 0; // вывход, если 7 подряд
+        }
+    }
+
+    std::cout << "NO" << std::endl; // вывод NO, если не нашли 
+    return 0;
+}

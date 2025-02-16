@@ -1,0 +1,27 @@
+#include <iostream>
+#include <string>
+
+int main() {
+    int t;
+    std::cin >> t; // Читаем количество тестов
+    while (t--) {
+        std::string b;
+        std::cin >> b; // Читаем строку b
+        std::string a;
+
+        // Добавляем первый символ b в a
+        a += b[0];
+
+        // Проходим по строке b и добавляем символы в a
+        for (size_t i = 1; i < b.size(); ++i) {
+            // Если текущий символ не равен предыдущему, добавляем его в a
+            if (b[i] != b[i - 1]) {
+                a += b[i];
+            }
+        }
+
+        // Выводим результат
+        std::cout << a << std::endl;
+    }
+    return 0;
+}

@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <unordered_map>
+
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int q;
+    cin >> q;
+
+    while (q--) {
+        int n;
+        cin >> n;
+
+        vector<int> a(n);
+        for (int i = 0; i < n; ++i) {
+            cin >> a[i];
+        }
+
+        // подсчет кол-ва конфет каждого типа
+        unordered_map<int, int> count;
+        for (int x : a) {
+            count[x]++;
+        }
+
+        // сбор кол-ва конфет в вектор
+        vector<int> counts;
+        for (auto& pair : count) {
+            counts.push_back(pair.second);
+        }
+
+        // Сорт кол-ва по убыванию
+        sort(counts.rbegin(), counts.rend());
+
+        // Построение подарка
+        int result = 0;
+        int prev = counts[0] + 1; // Начинаем с максимального возможного количества
+
+        for (int cnt : counts) {
+            if (prev <= 0) break; // Если количество стало нулевым, выходим
+
+            // Добавляем минимальное из текущего количества и (prev - 1)
+            int add = min(cnt, prev - 1);
+            result += add;
+            prev = add;
+        }
+
+        cout << result << "\n";
+    }
+
+    return 0;
+}
+
+

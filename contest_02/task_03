@@ -1,0 +1,26 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n; // Считать кол-во камней
+
+    string s;
+    cin >> s; // Считать цвета камней
+
+    int removeCount = 0; // Камни, которые надо убрать
+
+    // Проверка соседних камней
+    for (int i = 1; i < n; ++i) {
+        if (s[i] == s[i - 1]) { // Если два соседних камня одинакового цвета
+            removeCount++; // Счетчик +
+        }
+    }
+
+    // Вывод
+    cout << removeCount << endl;
+
+    return 0;
+}

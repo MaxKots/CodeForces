@@ -1,0 +1,36 @@
+#include <iostream>
+#include <set>
+#include <cctype>
+
+int main() {
+    int n;
+    std::cin >> n; // Считать кол-во символов
+    std::string input;
+    std::cin >> input; // Читаем строку
+
+    std::set<char> letters; // Множество для хранения уникальных букв
+
+    // Проходим по всем символам строки
+    for (char ch : input) {
+        // Привести символ к нижнему регистру и добавить в множество
+        letters.insert(tolower(ch));
+    }
+
+    // Проверить, содержит ли множество все буквы от a до z
+    bool allLettersPresent = true;
+    for (char c = 'a'; c <= 'z'; ++c) {
+        if (letters.find(c) == letters.end()) {
+            allLettersPresent = false;
+            break;
+        }
+    }
+
+    // Вывод
+    if (allLettersPresent) {
+        std::cout << "YES" << std::endl;
+    } else {
+        std::cout << "NO" << std::endl;
+    }
+
+    return 0;
+}

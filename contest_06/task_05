@@ -1,0 +1,34 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    bool has_even = false, has_odd = false;
+
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+        if (a[i] % 2 == 0) {
+            has_even = true;
+        } else {
+            has_odd = true;
+        }
+    }
+
+    // Если есть хотя бы 1 чет и 1 нечет, то сортируем
+    if (has_even && has_odd) {
+        sort(a.begin(), a.end());
+    }
+
+    // Вывод
+    for (int i = 0; i < n; ++i) {
+        cout << a[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}

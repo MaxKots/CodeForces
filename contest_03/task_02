@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+    cin.ignore(); // игнорируем перевод строки после t
+
+    while (t--) {
+        string s;
+        getline(cin, s);
+        
+        // Считаем количество каждого символа
+        vector<int> count(26, 0);
+        for (char c : s) {
+            count[c - 'a']++;
+        }
+
+        // Проверяем, можно ли получить не палиндром
+        if (count[s[0] - 'a'] == s.size()) {
+            cout << -1 << endl; // все символы одинаковые
+            continue;
+        }
+
+        // Сортируем строку
+        sort(s.begin(), s.end());
+
+        // Если отсортированная строка является палиндромом, меняем два символа
+        if (s == string(s.rbegin(), s.rend())) {
+            // Меняем первый и последний символ
+            swap(s[0], s[s.size() - 1]);
+        }
+
+        cout << s << endl;
+    }
+
+    return 0;
+}

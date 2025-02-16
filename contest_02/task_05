@@ -1,0 +1,17 @@
+#include <iostream>
+
+int main() {
+    int a, b;
+    std::cin >> a >> b; // Считать веса
+    int years = 0; // Счетчик лет
+
+    // Пока вес Л не больше веса Б
+    while (a <= b) {
+        a *= 3; // Умножить вес Л на 3
+        b *= 2; // Умножить вес Л на 2
+        years++; // Увеличить счетчик лет
+    }
+
+    std::cout << years << std::endl; // Вывод
+    return 0;
+}

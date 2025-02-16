@@ -1,0 +1,20 @@
+#include <iostream>
+#include <string>
+#include <cctype> // для toupper
+
+using namespace std;
+
+int main() {
+    string word;
+    cin >> word; // Считать слово
+
+    // Преобразовать первую букву в прописную, если она строчная
+    if (!word.empty()) {
+        word[0] = toupper(word[0]);
+    }
+
+    // Вывод
+    cout << word << endl;
+
+    return 0;
+}

@@ -1,0 +1,52 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int n, B;
+    cin >> n >> B;
+
+    vector<int> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+    }
+
+    // Вектор хранения стоимостей разрезов
+    vector<int> cuts;
+
+    int even = 0, odd = 0;
+    for (int i = 0; i < n - 1; ++i) {
+        if (a[i] % 2 == 0) {
+            even++;
+        } else {
+            odd++;
+        }
+
+        // Если кол-во чет и нечет чис равно - кандидат на разрез
+        if (even == odd) {
+            int cost = abs(a[i] - a[i + 1]);
+            cuts.push_back(cost);
+        }
+    }
+
+    // Сорт стоимости разрезов по возрастанию
+    sort(cuts.begin(), cuts.end());
+
+    // Подсчет макс. кол-ва разрезов, которые можно сделать
+    int max_cuts = 0;
+    int total_cost = 0;
+    for (int cost : cuts) {
+        if (total_cost + cost <= B) {
+            total_cost += cost;
+            max_cuts++;
+        } else {
+            break;
+        }
+    }
+
+    cout << max_cuts << endl;
+
+    return 0;
+}

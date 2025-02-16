@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int n, k;
+    cin >> n >> k;
+
+    vector<int> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+    }
+
+    // Сортировка массива
+    sort(a.begin(), a.end());
+
+    // Индекс медианы
+    int mid = n / 2;
+
+    // Увеличить медиану и элементы справа от неё
+    long long current = a[mid];
+    for (int i = mid + 1; i < n; ++i) {
+        // Вычислить, сколько можно добавить к текущему элементу
+        long long diff = a[i] - current;
+        long long operations = min((long long)k, diff * (i - mid));
+
+        current += operations / (i - mid);
+        k -= operations;
+
+        if (k == 0) break;
+    }
+
+    // Если ещё остались операции, добавить их к медиане
+    if (k > 0) {
+        current += k / (mid + 1);
+    }
+
+    cout << current << endl;
+
+    return 0;
+}

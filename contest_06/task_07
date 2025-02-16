@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, m;
+    cin >> n >> m;
+
+    // Чтение матрицы A
+    vector<vector<int>> A(n, vector<int>(m));
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cin >> A[i][j];
+        }
+    }
+
+    // Чтение матрицы B
+    vector<vector<int>> B(n, vector<int>(m));
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cin >> B[i][j];
+        }
+    }
+
+    // Проверка элементов на главной диагонали
+    for (int i = 0; i < min(n, m); ++i) {
+        if (A[i][i] != B[i][i]) {
+            cout << "NO\n";
+            return 0;
+        }
+    }
+
+    // Проверка остальных элементов
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < m; ++j) {
+            if (A[i][j] != B[i][j] || A[j][i] != B[j][i]) {
+                if (A[i][j] != B[j][i] || A[j][i] != B[i][j]) {
+                    cout << "NO\n";
+                    return 0;
+                }
+            }
+        }
+    }
+
+    cout << "YES\n";
+
+    return 0;
+}

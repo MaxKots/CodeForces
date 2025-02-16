@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int s, b;
+    cin >> s >> b;
+
+    // Силы атаки кораблей
+    vector<int> a(s);
+    for (int i = 0; i < s; ++i) {
+        cin >> a[i];
+    }
+
+    // защита и кол-во золота баз
+    vector<pair<int, int>> bases(b);
+    for (int i = 0; i < b; ++i) {
+        cin >> bases[i].first >> bases[i].second;
+    }
+
+    // Сорт базы по защите
+    sort(bases.begin(), bases.end());
+
+    // Префикс сумм золота
+    vector<int> prefix(b + 1, 0);
+    for (int i = 0; i < b; ++i) {
+        prefix[i + 1] = prefix[i] + bases[i].second;
+    }
+
+    // максимальное количество голды для кораблей
+    for (int i = 0; i < s; ++i) {
+        // бинарный поиск, чтобы найти последнюю базу для атаки кораблем
+        int low = 0, high = b - 1;
+        int last = -1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (bases[mid].first <= a[i]) {
+                last = mid;
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        // ЕЕсли нашли базу - атака
+        if (last != -1) {
+            cout << prefix[last + 1] << " ";
+        } else {
+            cout << 0 << " ";
+        }
+    }
+
+    cout << endl;
+
+    return 0;
+}

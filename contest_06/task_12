@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <map>
+
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    // групп. кандидатов по предметам
+    map<int, vector<int>> subject_to_skills;
+    for (int i = 0; i < n; ++i) {
+        int s, r;
+        cin >> s >> r;
+        subject_to_skills[s].push_back(r);
+    }
+
+    // сорт навыки кандидатов по убыванию по предметам
+    for (auto& [subject, skills] : subject_to_skills) {
+        sort(skills.rbegin(), skills.rend());
+    }
+
+    // макс кол-во кандидатов в 1 предмете
+    int max_k = 0;
+    for (const auto& [subject, skills] : subject_to_skills) {
+        max_k = max(max_k, (int)skills.size());
+    }
+
+    // Перебов возможных k
+    long long max_sum = 0;
+    for (int k = 1; k <= max_k; ++k) {
+        long long current_sum = 0;
+        for (const auto& [subject, skills] : subject_to_skills) {
+            if (skills.size() >= k) {
+                long long sum_k = 0;
+                for (int i = 0; i < k; ++i) {
+                    sum_k += skills[i];
+                }
+                if (sum_k > 0) {
+                    current_sum += sum_k;
+                }
+            }
+        }
+        max_sum = max(max_sum, current_sum);
+    }
+
+    // вывод макс. сумму
+    cout << max_sum << endl;
+
+    return 0;
+}

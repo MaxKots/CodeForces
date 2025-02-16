@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int n, k;
+    cin >> n >> k;
+
+    vector<int> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+    }
+
+    // Если k == 1, то ценник = разнице последнего и первого элемента
+    if (k == 1) {
+        cout << a[n - 1] - a[0] << endl;
+        return 0;
+    }
+
+    // Если k >= n, то = 0
+    if (k >= n) {
+        cout << 0 << endl;
+        return 0;
+    }
+
+    // Вычислить разность разности между соседями
+    vector<int> diffs;
+    for (int i = 1; i < n; ++i) {
+        diffs.push_back(a[i] - a[i - 1]);
+    }
+
+    // Сорт разности по возрастанию
+    sort(diffs.begin(), diffs.end());
+
+    // Сумма разностей, кроме k-1 наибольших
+    long long total = a[n - 1] - a[0];
+    for (int i = 0; i < k - 1; ++i) {
+        total -= diffs[n - 2 - i];
+    }
+
+    cout << total << endl;
+
+    return 0;
+}
