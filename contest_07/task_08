@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, k;
+    cin >> n >> k;
+
+    vector<int> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+    }
+
+    unordered_map<int, int> count;  // кол-во вхождений каждого числа
+    long long result = 0;           // кол-во подмассивов
+    int l = 0;                      // левый указатель
+
+    for (int r = 0; r < n; ++r) {
+        // увеличиваем кол-во вхождений текущего элемента
+        count[a[r]]++;
+
+        // если текущий элем. встречается k раз, то все подмассивы [l, r], [l, r+1] ... [l, n-1] подходят
+        while (count[a[r]] >= k) {
+            result += n - r;  // все подмассивы, начинающиеся с l и заканчивающиеся на r или правее
+            count[a[l]]--;    // уменьш кол-во вхождений элемента a[l]
+            l++;              // сдвиг левого указателя
+        }
+    }
+
+    cout << result << endl;
+
+    return 0;
+}
