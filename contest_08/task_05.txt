@@ -1,0 +1,78 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <set>
+
+using namespace std;
+
+// cтруктура для хранения событий
+struct Event {
+    int x; // rоордината по x
+    int type; // 1 - открытие, -1 - закрытие
+    int y1, y2; // uраницы по y
+
+    bool operator<(const Event& other) const {
+        return x < other.x || (x == other.x && type > other.type);
+    }
+};
+
+int main() {
+    int N;
+    cin >> N;
+
+    vector<Event> events;
+
+    for (int i = 0; i < N; ++i) {
+        int x1, y1, x2, y2;
+        cin >> x1 >> y1 >> x2 >> y2;
+        events.push_back({x1, 1, y1, y2}); // cобытие открытия
+        events.push_back({x2, -1, y1, y2}); // cобытие закрытия
+    }
+
+    // Сортируем события по x
+    sort(events.begin(), events.end());
+
+    // множество для хранения активных интервалов по y
+    multiset<pair<int, int>> activeIntervals;
+    long long totalArea = 0;
+    int prevX = 0;
+
+    for (const auto& event : events) {
+        int currentX = event.x;
+        int type = event.type;
+        int y1 = event.y1;
+        int y2 = event.y2;
+
+        // площадь между prevX и currentX
+        if (!activeIntervals.empty()) {
+            int height = 0;
+            int startY = -1, endY = -1;
+
+            for (const auto& interval : activeIntervals) {
+                if (interval.first > endY) {
+                    height += endY - startY;
+                    startY = interval.first;
+                    endY = interval.second;
+                } else {
+                    endY = max(endY, interval.second);
+                }
+            }
+            height += endY - startY;
+
+            totalArea += (long long)(currentX - prevX) * height;
+        }
+
+        // обнновление активных интервалов
+        if (type == 1) {
+            activeIntervals.insert({y1, y2});
+        } else {
+            activeIntervals.erase(activeIntervals.find({y1, y2}));
+        }
+
+        prevX = currentX;
+    }
+
+    cout << totalArea << endl;
+
+    return 0;
+}

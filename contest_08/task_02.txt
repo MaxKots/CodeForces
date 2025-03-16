@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int M;
+    cin >> M;
+
+    vector<pair<int, int>> segments;
+    int L, R;
+
+    // считать отрезки до пары (0, 0)
+    while (true) {
+        cin >> L >> R;
+        if (L == 0 && R == 0) break;
+        segments.push_back({L, R});
+    }
+
+    // фильтр отрезков, которые пересекаются с [0, M]
+    vector<pair<int, int>> filtered;
+    for (const auto& seg : segments) {
+        if (seg.second >= 0 && seg.first <= M) {
+            filtered.push_back(seg);
+        }
+    }
+
+    // сорт. отрезков по левой границе
+    sort(filtered.begin(), filtered.end());
+
+    vector<pair<int, int>> result;
+    int currentEnd = 0; // Текущая правая граница покрытия
+    int i = 0;
+
+    while (currentEnd < M && i < filtered.size()) {
+        int farthestEnd = currentEnd;
+        int bestIndex = -1;
+
+        // поиск отрезка, который начинается до currentEnd и имеет максимальную правую границу
+        while (i < filtered.size() && filtered[i].first <= currentEnd) {
+            if (filtered[i].second > farthestEnd) {
+                farthestEnd = filtered[i].second;
+                bestIndex = i;
+            }
+            i++;
+        }
+
+        if (bestIndex == -1) {
+            // Нет подходящего отрезка
+            break;
+        }
+
+        // добавить отрезок в результат
+        result.push_back(filtered[bestIndex]);
+        currentEnd = farthestEnd;
+    }
+
+    // проверить, покрыт ли отрезок [0, M]
+    if (currentEnd < M) {
+        cout << "No solution" << endl;
+    } else {
+        // вывод результат
+        cout << result.size() << endl;
+        for (const auto& seg : result) {
+            cout << seg.first << " " << seg.second << endl;
+        }
+    }
+
+    return 0;
+}

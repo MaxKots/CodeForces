@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+ 
+using namespace std;
+ 
+typedef long long ll;
+ 
+struct Event {
+    ll x, type, num;    // 0 - open, 1 - point, 2 - close
+    Event(ll x, ll type, ll num) : x(x), type(type), num(num) {};
+};
+ 
+bool operator <(const Event& a, const Event& b) {   // В одной координате
+    return make_pair(a.x, a.type) < make_pair(b.x, b.type); // Сначала обраюатывается открытие отрезка, потом точка, потом закрытие отрезка
+}
+ 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    int n, m;
+    cin >> n >> m;
+    vector<Event> ev;
+    ev.reserve(n + m);
+    int l, r;
+    for (int i = 0; i < n; ++i) {
+        cin >> l >> r;
+        ev.push_back(Event(min(l, r), 0, -1));      // !!!!
+        ev.push_back(Event(max(l, r), 2, -1));  // !!!!
+    }
+    for (int i = 0; i < m; ++i) {
+        cin >> l;
+        ev.push_back(Event(l, 1, i));
+    }
+    sort(ev.begin(), ev.end());
+    int bal = 0;        // Кол-во "активных отрезков"
+    vector<int> ans(m);
+    for (auto& e : ev) {
+        if (e.type == 0) ++bal;
+        else if (e.type == 1) ans[e.num] = bal;
+        else --bal;
+    }
+    for (int i = 0; i < m; ++i) {
+        cout << ans[i] << ' ';
+    }
+    return 0;
+}
